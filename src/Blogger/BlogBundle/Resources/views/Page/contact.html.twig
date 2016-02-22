@@ -1,0 +1,30 @@
+{# src/Blogger/BlogBundle/Resources/views/Page/contact.html.twig #}
+{% extends 'BloggerBlogBundle::layout.html.twig' %}
+
+{% block title %}Contact{% endblock%}
+
+{% block body %}
+    <header>
+        <h1>Contact symblog</h1>
+    </header>
+
+    <p>Want to contact symblog?</p>
+
+    {# replce "form_enctype(form)" to "form_start(form)" #}
+
+    {#<form action="{{ path('BloggerBlogBundle_contact') }}" method="post" {{ form_enctype(form) }} class="blogger">#}
+    {{ form_start(form, {'class': 'EnquiryType', 'action': 'contact', 'method': 'POST', 'attr': {'class': 'blogger'}}) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name, {'label': 'Имя'}) }}
+        {{ form_row(form.email, {'label': 'Email'}) }}
+        {{ form_row(form.subject, {'label': 'От кого'}) }}
+        {{ form_row(form.body, {'label': 'Текст'}) }}
+
+        {{ form_rest(form) }}
+        <input type="submit" value="Submit" />
+        {#{{ form_row(form.submit, { 'label': 'Submit me' }) }}#}
+    {{ form_end(form) }}
+
+    {#</form>#}
+{% endblock %}
