@@ -1,0 +1,23 @@
+Blogger\BlogBundle\Entity\Enquiry:
+    type: entity
+    table: null
+    repositoryClass: Blogger\BlogBundle\Repository\EnquiryRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: '100'
+        email:
+            type: string
+            length: '255'
+        subject:
+            type: string
+            length: '50'
+        body:
+            type: text
+    lifecycleCallbacks: {  }

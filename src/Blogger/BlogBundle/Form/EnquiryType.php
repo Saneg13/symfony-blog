@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class EnquiryType extends AbstractType
 {
@@ -23,6 +24,7 @@ class EnquiryType extends AbstractType
         $builder->add('email', EmailType::class);
         $builder->add('subject');
         $builder->add('body', TextareaType::class);
+        //$builder->add('Submit', SubmitType::class);
     }
 
     public function getBlockPrefix()

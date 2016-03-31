@@ -1,7 +1,33 @@
 {# src/Blogger/BlogBundle/Resources/views/Page/index.html.twig #}
 {% extends 'BloggerBlogBundle::layout.html.twig' %}
 
-
 {% block body %}
-    Blog homepage
+    {#Blog homepage {{ name }}#}
+    <h1>Output Data</h1>
+
+    {#<div class="table-responsive">#}
+    <table class="table">
+        <tr>
+        <thead>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Body</th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for i in entities %}
+    <tr>
+        <td>{{ i.name }}</td>
+
+        <td>{{ i.email }}</td>
+
+        <td>{{ i.subject }}</td>
+
+        <td>{{ i.body }}</td>
+    </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+    {#</div>#}
 {% endblock %}

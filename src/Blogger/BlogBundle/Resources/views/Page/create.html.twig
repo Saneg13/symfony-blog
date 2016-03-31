@@ -1,0 +1,13 @@
+{# src/Blogger/BlogBundle/Resources/views/Page/create.html.twig #}
+{% extends 'BloggerBlogBundle::layout.html.twig' %}
+
+{% block title %}Create{% endblock%}
+
+{% block body -%}
+    <header>
+        <h1>Data creation</h1>
+    </header>
+
+    {{ form(form, {'attr': {'novalidate': 'novalidate', 'class' : 'blogger'}}) }}
+
+{% endblock %}

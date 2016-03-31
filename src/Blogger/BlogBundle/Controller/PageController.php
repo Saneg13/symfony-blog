@@ -12,15 +12,31 @@ namespace Blogger\BlogBundle\Controller;
 use Blogger\BlogBundle\Entity\Enquiry;
 use Blogger\BlogBundle\Form\EnquiryType;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 
 class PageController extends Controller {
 
     public function indexAction()
     {
-        return $this->render('BloggerBlogBundle:Page:index.html.twig');
+        //$user_name = 'Saneg13';
+        $user_name = '';
+
+//        return $this->render('BloggerBlogBundle:Page:index.html.twig', array(
+//            'name' => $user_name
+//        ));
+        $entities = $this->getDoctrine()
+            ->getRepository('BloggerBlogBundle:Enquiry')
+            ->findAll();
+        if (!$entities) {
+            throw $this->createNotFoundException(
+                'No products found'
+            );
+        }
+
+        return $this->render('BloggerBlogBundle:Page:index.html.twig', array('entities' => $entities));
     }
 
     public function aboutAction()
@@ -33,23 +49,45 @@ class PageController extends Controller {
         $enquiry = new Enquiry();
         $form = $this->createForm(EnquiryType::class, $enquiry);
 
+        $form->add('submit', 'submit', array('label' => 'Create'));
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-
             if ($form->isValid()) {
                 // Perform some action, such as sending an email
-
                 // Redirect - This is important to prevent users re-posting
                 // the form if they refresh the page
                 return $this->redirect($this->generateUrl('BloggerBlogBundle_contact'));
             }
         }
-
         return $this->render('BloggerBlogBundle:Page:contact.html.twig', array(
             'form' => $form->createView()
         ));
-
         //return $this->render('BloggerBlogBundle:Page:contact.html.twig');
+    }
+
+    public function createAction(Request $request){
+
+        $entity = new Enquiry();
+        $form = $this->createForm(EnquiryType::class, $entity);
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('BloggerBlogBundle_homepage'));
+            }
+        }
+
+        return $this->render('BloggerBlogBundle:Page:create.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
     }
 
 //    public function contactAction(Request $request)
